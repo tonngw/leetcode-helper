@@ -23,7 +23,7 @@
 1. Chrome 浏览器 / Edge 浏览器
 2. 安装 `Tampermonkey` 油猴插件，这块大家自行搜索安装，网上有很多教程。
 
-**Option 1**：直接在 [https://greasyfork.org/zh-CN](https://greasyfork.org/zh-CN) 搜索 `leetcode-helper` 安装即可，或者通过 [此链接]()直接安装。「推荐」
+**Option 1**：直接在 [https://greasyfork.org/zh-CN](https://greasyfork.org/zh-CN) 搜索 `leetcode-helper` 安装即可，或者通过 [此链接](https://greasyfork.org/zh-CN/scripts/444408-leetcode-helper)直接安装。「推荐」
 
 **Option 2**：脚本源代码已经放在了仓库中，可以复制自行安装。
 
