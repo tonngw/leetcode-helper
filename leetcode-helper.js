@@ -154,7 +154,7 @@
         turndownService.addRule('strikethrough', {
             filter: ['code'],
             replacement: function (content) {
-                return '$' + content + "$"
+                return '`' + content + "`"
             }
         });
         turndownService.addRule('strikethrough', {
