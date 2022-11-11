@@ -71,7 +71,7 @@
 		e.preventDefault();
 		generateSolution();
 	};
-    
+
     // 监听键盘按键，为功能绑定快捷键
 	unsafeWindow.addEventListener("keydown", (evt) => {
 		// console.log('evt', evt);
@@ -98,9 +98,15 @@
 	}
 
     function copyImpl() {
+        // 标题 Dom
+        var titleDom = $('h4[data-cypress="QuestionTitle"]')[0].outerHTML;
+        content = handleTitle(titleDom);
+        // 难度
+        content += '难度：' + $('[data-degree]').text() + "\n\n";
+        content += "-------\n\n";
         // 题目描述 内容 Dom
         var contentDom = $('.content__1Y2H')[0].outerHTML;
-        content = handleHtml(contentDom);
+        content += handleHtml(contentDom);
     }
 
     // 生成题解功能实现
@@ -127,10 +133,29 @@
 		var spaceComplexity = "\nwrite here...\n";
 		var codeConst = "#### C++ 代码\n";
 		var code = "```\n" + "my code...\n" + "```\n";
-		solutionTemplate = problemDescConst + problemDesc + splitLine + algorithmConst + specificAlgorithmConst + 
+		solutionTemplate = problemDescConst + problemDesc + splitLine + algorithmConst + specificAlgorithmConst +
 			solution + timeComplexityConst + timeComplexity + spaceComplexityConst + spaceComplexity + codeConst + code;
 		GM_setClipboard(solutionTemplate);
 	}
+
+
+    function handleTitle(html) {
+
+        turndownService.addRule('strikethrough', {
+            filter: ['a'],
+            replacement: function (content, node) {
+                return node.innerText.trim();
+            }
+        });
+        turndownService.addRule('strikethrough', {
+            filter: ['button'],
+            replacement: function (content, node) {
+                return '';
+            }
+        });
+        return turndownService.turndown(html) + "\n\n"
+    }
+
 
     /**
      * html 转 markdown
