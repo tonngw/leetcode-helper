@@ -14,21 +14,21 @@
 // @grant        GM_setClipboard
 // @license 	 MIT
 // ==/UserScript==
- 
+
 (function () {
     'use strict';
- 
+
     // 初始化 html to markdown 转换工具
     var turndownService = new TurndownService();
- 
+
     const window = unsafeWindow;
     const description = '.description__2b0C';
     var content = '';
- 
+
     // 注入菜单
     GM_registerMenuCommand("复制 LeetCode 题目为 Markdown，并存入剪切板", copy);
     GM_registerMenuCommand("生成当前题目的题解模板，并存入剪切板", generateSolution);
- 
+
     // 添加复制按钮
     var copyBtn = document.createElement("button"); //创建一个 input 对象（提示框按钮）
     copyBtn.id = "copyBtn";
@@ -38,7 +38,7 @@
     copyBtn.style.align = "center";
     copyBtn.style.marginLeft = "10px";
     copyBtn.title = "复制题目为 Markdown 格式";
- 
+
     // 添加生成题解按钮
 	var generateSolutionBtn = document.createElement("button"); // 创建一个input对象（提示框按钮）
 	generateSolutionBtn.id = "generateSolutionBtn";
@@ -48,26 +48,26 @@
 	generateSolutionBtn.style.align = "center";
     generateSolutionBtn.style.marginLeft = "10px";
     generateSolutionBtn.title = "生成 Markdown 格式题解";
- 
+
     window.onload = setTimeout(function () {
         var x = document.getElementsByClassName("mr-2 text-label-1 dark:text-dark-label-1 text-lg font-medium")[0];
         console.log("I was invoked...");
         x.parentNode.appendChild(copyBtn);
         x.parentNode.appendChild(generateSolutionBtn);
     }, 1500);
- 
+
     // 为复制按钮绑定点击功能
 	copyBtn.onclick = function (e) {
 		e.preventDefault();
 		copy();
 	};
- 
+
     // 为复制按钮绑定点击功能
 	generateSolutionBtn.onclick = function (e) {
 		e.preventDefault();
 		generateSolution();
 	};
- 
+
     // 监听键盘按键，为功能绑定快捷键
 	unsafeWindow.addEventListener("keydown", (evt) => {
 		// console.log('evt', evt);
@@ -82,7 +82,7 @@
 			}
 		}
 	});
- 
+
     // 题目复制功能实现
 	function copy() {
 		copyImpl();
@@ -92,14 +92,14 @@
 			title: "复制成功",
 		});
 	}
- 
+
     function copyImpl() {
         // 题目描述 内容 Dom
         var contentDom = $('._1l1MA')[0].outerHTML;
         console.log(contentDom);
         content = handleHtml(contentDom);
     }
- 
+
     // 生成题解功能实现
 	function generateSolution() {
 		generateSolutionImpl();
@@ -108,7 +108,7 @@
 			title: "生成成功",
 		});
 	}
- 
+
 	function generateSolutionImpl() {
 		var solutionTemplate = "";
 		var problemDescConst = "### 题目描述\n";
@@ -128,7 +128,7 @@
 			solution + timeComplexityConst + timeComplexity + spaceComplexityConst + spaceComplexity + codeConst + code;
 		GM_setClipboard(solutionTemplate);
 	}
- 
+
     /**
      * html 转 markdown
      * @param html
@@ -160,7 +160,7 @@
                 return '^{' + content + "}"
             }
         });
- 
+
         var markdown = turndownService.turndown(html);
         return markdown
     }
